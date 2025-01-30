@@ -15,7 +15,7 @@ public class LeetCodeAttempt {
     }
 
     // This method returns an edge that can be removed while still maintaining the tree structure
-    // of the graph. Returns null if no such edge exists.
+    // of the graph (i.e. all nodes are still connected somehow). Returns null if no such edge exists.
     public static int[] redundantConnection(int[][] edges) {
 
         // Since the challenge specifications specified we want the latest edge if there are
@@ -26,22 +26,26 @@ public class LeetCodeAttempt {
             // nodes in the current edges[i] can be found elsewhere in the graph. If they both
             // can be found elsewhere, it means that deleting the current edge will not disconnect
             // the two nodes from the rest of the graph as they're still connected elsewhere. We
-            // set both booleans to false and set them to true if their respective nodes can be
-            // detected elsewhere.
+            // set both booleans to false and set them to true for this iteration of the loop if
+            // their respective nodes can be detected elsewhere.
             boolean firstNode = false;
             boolean secondNode = false;
 
-            // We do a second loop through the array to detect the presence
-            // of the nodes in edges[i] elsewhere in the graph.
+            // We do a second loop through the array to detect the presence of the two
+            // nodes in edges[i], to see if they are present elsewhere in the graph.
             for (int j = 0; j < edges.length; j++) {
 
-                // We skip when we are iterating over the exact same edge.
+                // We skip the current loop when we are iterating over the exact same edge.
                 if (edges[i] == edges[j]) { continue; }
 
+                // We set boolean firstNode to true if the first node of edges[i] can be
+                // found in either the first or second node of edges[j].
                 if (edges[i][0] == edges[j][0] || edges[i][0] == edges[j][1]) {
                     firstNode = true;
                 }
 
+                // We set boolean secondNode to true if the second node of edges[i] can be
+                // found in either the first or second node of edges[j].
                 if (edges[i][1] == edges[j][0] || edges[i][1] == edges[j][1]) {
                     secondNode = true;
                 }
